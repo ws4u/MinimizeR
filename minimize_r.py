@@ -28,22 +28,21 @@ def min_r_tree(T):
         if len(T[i])==1:
             continue
         TT = T.copy()
-        seq_T = []
         TT.remove_node(i)
-        seq_T.append(i)
+        seq_current = [i]
+        r_current = n-1
         cc_list=[TT.subgraph(c).copy() for c in nx.connected_components(TT)]
-        r_T = n-1
         # a list of seqs; merging is not fully implemented now
         seq_list=[] 
         for C in cc_list:
             r, seq = min_r_tree(C)
-            r_T += r
-            seq_T += seq
+            r_current += r
+            seq_current += seq
             seq_list.append(seq)
 
-        if r_T < min_r:
-            min_r = r_T
-            node_seq = seq_T
+        if r_current < min_r:
+            min_r = r_current
+            node_seq = seq_current
         
         del(TT)
 
